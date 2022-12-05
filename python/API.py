@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 import os
 from inference.classification_inference import run_classification_inference
+import urllib
 
 app = FastAPI()
 
@@ -15,8 +16,6 @@ async def classification(img_path: str):
     return {'Confidence Negative': negative_confidence.item(), 
             'Confidence Positive': positive_confidence.item()}
 
-
-
 @app.get("/segmentation/{img_path}")
 async def segmentation(img_path: str):
 
@@ -30,4 +29,18 @@ async def segmentation(img_path: str):
 
     #return path to saved segmentation file
     return {new_path}
+
+@app.get("/append_ct_dataset/{uri}")
+async def append_ct_dataset(uri: str):
+    # code to add image to dataset
+    response = urllib.request.urlopen(uri)
+    with open('image.jpg', 'wb') as f:
+        f.write(response.file.read())
+
+@app.get("/infection_mask_dataset/{uri}")
+async def infection_mask_dataset(uri: str):
+    # code to add image to dataset
+    response = urllib.request.urlopen(uri)
+    with open('image.jpg', 'wb') as f:
+        f.write(response.file.read())
 
