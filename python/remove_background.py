@@ -1,7 +1,8 @@
 from rembg import remove
 from PIL import Image
-import easygui as eg
+import os
 
+input_path = 'dumbass.jpeg'
 input = Image.open('dumbass.jpeg')
 output = remove(input)
-output.save('background_less.png')
+output.save(os.path.split(input_path))
