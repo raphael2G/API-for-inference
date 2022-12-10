@@ -1,8 +1,17 @@
 import cv2
+import os
+import numpy as np
+
+base_path = 'dummy_data/testing_crop/'
 
 # this function takes in an inage (medical image with white background) and saves the medical image with no white background
-def remove_background(input_path):
-    img = cv2.imread(input_path)
+# returns a numpy array
+def remove_background(PIL_image):
+    print('***************************remove_background********')
+
+
+    # convert PIL image to cv2
+    img = cv2.cvtColor(np.array(PIL_image), cv2.COLOR_BGR2RGB)
 
     ## (1) Convert to gray, and threshold
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -20,6 +29,4 @@ def remove_background(input_path):
     x,y,w,h = cv2.boundingRect(cnt)
     dst = img[y:y+h, x:x+w]
 
-    cv2.imwrite('001.jpg', dst, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
-
-remove_background('background.jpeg')
+    return dst
