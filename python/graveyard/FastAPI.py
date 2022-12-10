@@ -6,6 +6,7 @@ import uuid
 
 app = FastAPI()
 
+
 base_data_path = '../dummy_data/images'
 base_segmentation_path = '../data/segmentation'
 
